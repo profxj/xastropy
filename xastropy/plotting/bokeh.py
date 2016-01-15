@@ -57,7 +57,7 @@ def plot_spec_notebook(spec, title=None, xmnx=None, ymnx=None):
     show(p)
 
 
-def histogram(arr, xlbl, xrng=None, nbins=20, alpha=1.):
+def histogram(arr, xlbl, xrng=None, nbins=20, alpha=1., density=True):
     """ Generate a bokeh histogram
 
     Parameters
@@ -71,12 +71,14 @@ def histogram(arr, xlbl, xrng=None, nbins=20, alpha=1.):
       number of bins
     alpha : float, optional
       alpha for
+    density : bool, optional
+      Normalize?
     """
     if xrng is None:
         xrng = (np.min(arr),np.max(arr))
     p = figure(plot_width=600, plot_height=400)
     # Histogram
-    hist, edges = np.histogram(arr, range=xrng, density=True, bins=nbins)
+    hist, edges = np.histogram(arr, range=xrng, density=density, bins=nbins)
     p.quad(top=hist, bottom=0, left=edges[:-1], right=edges[1:], fill_color='blue', alpha=alpha)
     # Label
     p.xaxis.axis_label = xlbl
